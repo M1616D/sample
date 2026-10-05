@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Placeholder image of machining work">
+  <defs><pattern id="m" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.05"/></pattern></defs>
+  <rect width="800" height="600" fill="#12151a"/><rect width="800" height="600" fill="url(#m)"/>
+  <g fill="none" stroke="#9aa2ac" stroke-width="3"><rect x="150" y="240" width="500" height="230"/><path d="M150 340h500"/><path d="M300 470v70M520 470v70"/></g>
+  <g fill="none" stroke="#f97316" stroke-width="3"><circle cx="400" cy="290" r="46"/><circle cx="400" cy="290" r="20"/><path d="M400 244v-48M354 290h-48M446 290h48M400 336v48"/></g>
+  <g><rect x="24" y="24" width="210" height="32" fill="#f97316"/><text x="129" y="45" fill="#12151a" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">PLACEHOLDER IMAGE</text></g>
+  <text x="24" y="575" fill="#6d7580" font-family="Helvetica,Arial,sans-serif" font-size="15">Precision machining</text>
+</svg>

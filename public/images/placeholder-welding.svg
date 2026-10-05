@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Placeholder image of welding work">
+  <defs><pattern id="w" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.05"/></pattern></defs>
+  <rect width="800" height="600" fill="#12151a"/><rect width="800" height="600" fill="url(#w)"/>
+  <g fill="none" stroke="#9aa2ac" stroke-width="3"><path d="M60 470h680"/><path d="M180 470V250h180v220"/><path d="M470 470V320h150v150"/></g>
+  <g fill="none" stroke="#f97316" stroke-width="3"><path d="M360 250l60-90 60 90"/><path d="M420 160v-60"/></g>
+  <g fill="#f97316" fill-opacity="0.9"><circle cx="420" cy="150" r="12"/><circle cx="404" cy="176" r="6"/><circle cx="438" cy="182" r="5"/></g>
+  <g><rect x="24" y="24" width="210" height="32" fill="#f97316"/><text x="129" y="45" fill="#12151a" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">PLACEHOLDER IMAGE</text></g>
+  <text x="24" y="575" fill="#6d7580" font-family="Helvetica,Arial,sans-serif" font-size="15">Welding &amp; assembly</text>
+</svg>

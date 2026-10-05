@@ -1,0 +1,48 @@
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+.yarn/install-state.gz
+
+# next.js
+/.next/
+/out/
+/build
+next-env.d.ts
+
+# production
+/dist
+
+# env — never commit real secrets. .env.example is intentionally tracked.
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# database (local SQLite dev database)
+*.db
+*.db-journal
+prisma/dev.db
+prisma/*.db
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+*.log
+
+# editor / os
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+Thumbs.db
+*.swp
+
+# local agent tooling
+.freebuff/
+
+# misc
+*.tsbuildinfo
+/coverage

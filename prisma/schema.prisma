@@ -1,0 +1,337 @@
+// Industrial Platform — data model
+//
+// Portability notes
+// -----------------
+// This schema targets SQLite for zero-configuration local development, but is
+// written to be portable to PostgreSQL (e.g. a free Supabase/Neon tier) with a
+// single change: set `provider = "postgresql"` below and point DATABASE_URL at
+// your database. To preserve that portability we do NOT use provider-specific
+// features:
+//   * No native enums  -> status/kind fields are Strings, guarded by TypeScript
+//                         union types in src/lib/types.ts
+//   * No native Json   -> structured fields are stored as JSON strings and
+//                         parsed/serialised through src/lib/serialize.ts
+// This keeps the schema identical across providers.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Administration
+// ---------------------------------------------------------------------------
+
+model AdminUser {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("ADMIN") // ADMIN | EDITOR
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Taxonomy
+// ---------------------------------------------------------------------------
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String    @default("")
+  kind        String    @default("product") // product | project | post
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  products    Product[]
+  projects    Project[]
+  posts       Post[]
+}
+
+// ---------------------------------------------------------------------------
+// Catalogue
+// ---------------------------------------------------------------------------
+
+model Product {
+  id               String   @id @default(cuid())
+  name             String
+  slug             String   @unique
+  kind             String   @default("product") // product | machinery
+  categoryId       String?
+  category         Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  shortDescription String   @default("")
+  description      String   @default("")
+  mainImage        String   @default("")
+  gallery          String   @default("[]") // JSON string[]
+  videoUrl         String   @default("")
+  features         String   @default("[]") // JSON string[]
+  applications      String  @default("[]") // JSON string[]
+  benefits         String   @default("[]") // JSON string[]
+  models           String   @default("[]") // JSON string[]
+  specs            String   @default("[]") // JSON {label,value}[]
+  availability     String   @default("") // e.g. "In stock", "Made to order"
+  status           String   @default("DRAFT") // DRAFT | PUBLISHED | ARCHIVED
+  featured         Boolean  @default(false)
+  sortOrder        Int      @default(0)
+  seoTitle         String   @default("")
+  seoDescription   String   @default("")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  quoteRequests    QuoteRequest[]
+  spareParts       SparePart[]
+
+  @@index([kind, status])
+  @@index([categoryId])
+}
+
+model SparePart {
+  id           String   @id @default(cuid())
+  partNumber   String   @default("")
+  name         String
+  slug         String   @unique
+  machine      String   @default("")
+  description  String   @default("")
+  image        String   @default("")
+  availability String   @default("")
+  status       String   @default("DRAFT") // DRAFT | PUBLISHED | ARCHIVED
+  productId    String?
+  product      Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Services & capabilities
+// ---------------------------------------------------------------------------
+
+model Service {
+  id          String   @id @default(cuid())
+  name        String
+  slug        String   @unique
+  summary     String   @default("")
+  description String   @default("")
+  image       String   @default("")
+  icon        String   @default("")
+  features    String   @default("[]") // JSON string[]
+  status      String   @default("PUBLISHED")
+  sortOrder   Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Capability {
+  id           String   @id @default(cuid())
+  name         String
+  slug         String   @unique
+  description  String   @default("")
+  image        String   @default("")
+  equipment    String   @default("[]") // JSON string[]
+  applications String   @default("[]") // JSON string[]
+  status       String   @default("PUBLISHED")
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Projects / portfolio
+// ---------------------------------------------------------------------------
+
+model Project {
+  id          String    @id @default(cuid())
+  title       String
+  slug        String    @unique
+  categoryId  String?
+  category    Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  client      String    @default("") // leave blank when not disclosable
+  location    String    @default("")
+  date        DateTime?
+  summary     String    @default("")
+  description String    @default("")
+  challenge   String    @default("")
+  solution    String    @default("")
+  result      String    @default("")
+  images      String    @default("[]") // JSON string[]
+  videoUrl    String    @default("")
+  productIds  String    @default("[]") // JSON string[] of Product ids
+  status      String    @default("DRAFT") // DRAFT | PUBLISHED | ARCHIVED
+  featured    Boolean   @default(false)
+  sortOrder   Int       @default(0)
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Content (news, FAQ, team)
+// ---------------------------------------------------------------------------
+
+model Post {
+  id         String    @id @default(cuid())
+  title      String
+  slug       String    @unique
+  categoryId String?
+  category   Category? @relation(fields: [categoryId], references: [id], onDelete: SetNull)
+  excerpt    String    @default("")
+  content    String    @default("")
+  coverImage String    @default("")
+  author     String    @default("")
+  status     String    @default("DRAFT") // DRAFT | PUBLISHED | ARCHIVED
+  publishedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([status])
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String
+  group     String   @default("General")
+  status    String   @default("PUBLISHED")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model TeamMember {
+  id        String   @id @default(cuid())
+  name      String
+  role      String   @default("")
+  bio       String   @default("")
+  image     String   @default("")
+  email     String   @default("")
+  phone     String   @default("")
+  status    String   @default("PUBLISHED")
+  sortOrder Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Lead generation + CRM
+// ---------------------------------------------------------------------------
+
+model Customer {
+  id            String   @id @default(cuid())
+  name          String
+  company       String   @default("")
+  phone         String   @default("")
+  email         String   @default("")
+  telegram      String   @default("")
+  address       String   @default("")
+  notes         String   @default("")
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  quoteRequests QuoteRequest[]
+  serviceRequests ServiceRequest[]
+
+  @@index([name])
+}
+
+model QuoteRequest {
+  id               String   @id @default(cuid())
+  reference        String   @unique
+  fullName         String
+  company          String   @default("")
+  phone            String   @default("")
+  email            String   @default("")
+  telegram         String   @default("")
+  country          String   @default("")
+  city             String   @default("")
+  productService   String   @default("")
+  quantity         String   @default("")
+  requirements     String   @default("")
+  timeline         String   @default("")
+  preferredContact String   @default("") // phone | email | telegram | whatsapp
+  attachmentUrl    String   @default("")
+  notes            String   @default("")
+  status           String   @default("NEW") // NEW | CONTACTED | QUOTATION_SENT | NEGOTIATING | WON | LOST | CANCELLED
+  assignedTo       String   @default("")
+  internalNotes    String   @default("")
+  source           String   @default("") // page or product the request originated from
+
+  productId        String?
+  product          Product? @relation(fields: [productId], references: [id], onDelete: SetNull)
+  customerId       String?
+  customer         Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model ContactMessage {
+  id        String   @id @default(cuid())
+  name      String
+  email     String   @default("")
+  phone     String   @default("")
+  subject   String   @default("")
+  message   String
+  status    String   @default("NEW") // NEW | READ | REPLIED | ARCHIVED
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([status])
+}
+
+model ServiceRequest {
+  id           String   @id @default(cuid())
+  reference    String   @unique
+  customerName String
+  company      String   @default("")
+  phone        String   @default("")
+  email        String   @default("")
+  machine      String   @default("")
+  serialNumber String   @default("")
+  problem      String   @default("")
+  description  String   @default("")
+  location     String   @default("")
+  photos       String   @default("[]") // JSON string[]
+  status       String   @default("NEW") // NEW | ASSIGNED | IN_PROGRESS | WAITING_FOR_PARTS | COMPLETED | CLOSED
+  assignedTo   String   @default("")
+  internalNotes String  @default("")
+  customerId   String?
+  customer     Customer? @relation(fields: [customerId], references: [id], onDelete: SetNull)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  @@index([status])
+}
+
+// ---------------------------------------------------------------------------
+// Media & configuration
+// ---------------------------------------------------------------------------
+
+model MediaAsset {
+  id        String   @id @default(cuid())
+  url       String
+  alt       String   @default("")
+  title     String   @default("")
+  kind      String   @default("image") // image | video | document
+  createdAt DateTime @default(now())
+}
+
+// Key/value configuration store. `value` is a JSON-encoded string so that
+// arbitrary structured settings (social links, address, SEO defaults) can be
+// added by an administrator without a schema migration.
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String   @default("")
+  updatedAt DateTime @updatedAt
+}

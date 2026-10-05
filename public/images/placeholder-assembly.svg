@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600" role="img" aria-label="Placeholder image of machine assembly">
+  <defs><pattern id="a" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0H0V40" fill="none" stroke="#fff" stroke-opacity="0.05"/></pattern></defs>
+  <rect width="800" height="600" fill="#12151a"/><rect width="800" height="600" fill="url(#a)"/>
+  <g fill="none" stroke="#9aa2ac" stroke-width="3">
+    <rect x="110" y="300" width="580" height="170"/><rect x="170" y="210" width="200" height="90"/>
+    <path d="M110 400h580"/><circle cx="200" cy="470" r="30"/><circle cx="600" cy="470" r="30"/>
+  </g>
+  <g fill="none" stroke="#f97316" stroke-width="3"><path d="M430 210h180v90H430z"/><path d="M520 210v-70"/></g>
+  <g><rect x="24" y="24" width="210" height="32" fill="#f97316"/><text x="129" y="45" fill="#12151a" font-family="Helvetica,Arial,sans-serif" font-size="14" font-weight="700" letter-spacing="2" text-anchor="middle">PLACEHOLDER IMAGE</text></g>
+  <text x="24" y="575" fill="#6d7580" font-family="Helvetica,Arial,sans-serif" font-size="15">Machine assembly</text>
+</svg>

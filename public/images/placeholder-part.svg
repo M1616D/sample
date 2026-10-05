@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 450" role="img" aria-label="Placeholder image of a spare part">
+  <defs><pattern id="p" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0H0V30" fill="none" stroke="#fff" stroke-opacity="0.05"/></pattern></defs>
+  <rect width="600" height="450" fill="#12151a"/><rect width="600" height="450" fill="url(#p)"/>
+  <g fill="none" stroke="#9aa2ac" stroke-width="3"><circle cx="300" cy="225" r="86"/><circle cx="300" cy="225" r="30"/></g>
+  <g fill="none" stroke="#f97316" stroke-width="3">
+    <path d="M300 139v-38M300 311v38M214 225h-38M386 225h38M239 164l-27-27M361 286l27 27M361 164l27-27M239 286l-27 27"/>
+  </g>
+  <g><rect x="20" y="20" width="196" height="30" fill="#f97316"/><text x="118" y="40" fill="#12151a" font-family="Helvetica,Arial,sans-serif" font-size="13" font-weight="700" letter-spacing="1.8" text-anchor="middle">PLACEHOLDER IMAGE</text></g>
+</svg>

@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" role="img" aria-label="Industrial Works — industrial machinery and manufacturing">
+  <defs>
+    <pattern id="og" width="48" height="48" patternUnits="userSpaceOnUse">
+      <path d="M48 0H0V48" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+  </defs>
+  <rect width="1200" height="630" fill="#12151a"/>
+  <rect width="1200" height="630" fill="url(#og)"/>
+  <rect x="0" y="0" width="10" height="630" fill="#f97316"/>
+
+  <g fill="none" stroke="#3a4049" stroke-width="3">
+    <rect x="880" y="200" width="240" height="230"/>
+    <rect x="920" y="150" width="160" height="50"/>
+    <path d="M880 340h240M940 430v60M1060 430v60"/>
+  </g>
+  <g fill="none" stroke="#f97316" stroke-width="3">
+    <path d="M1120 150v280M1150 190v200"/>
+  </g>
+
+  <text x="70" y="250" fill="#ffffff" font-family="Helvetica,Arial,sans-serif" font-size="54" font-weight="700" letter-spacing="-1">Industrial Works</text>
+  <text x="70" y="312" fill="#9aa2ac" font-family="Helvetica,Arial,sans-serif" font-size="28">Machinery &amp; Manufacturing Solutions</text>
+  <rect x="70" y="350" width="120" height="4" fill="#f97316"/>
+  <text x="70" y="404" fill="#6d7580" font-family="Helvetica,Arial,sans-serif" font-size="20">Engineering · Fabrication · Machines · Spare Parts · Service</text>
+</svg>
